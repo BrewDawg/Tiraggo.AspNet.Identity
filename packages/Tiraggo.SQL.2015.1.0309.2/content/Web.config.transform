@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<configuration>
+
+  <configSections>
+    <sectionGroup name="Tiraggo" type="Tiraggo.Interfaces.tgConfigSettings, Tiraggo.Core">
+      <section name="connectionInfo" 
+               type="Tiraggo.Interfaces.tgConfigSettings, Tiraggo.Interfaces" 
+               allowLocation="true" 
+               allowDefinition="Everywhere" 
+               restartOnExternalChanges="true"/>
+    </sectionGroup>
+  </configSections>
+
+  <Tiraggo>
+    <connectionInfo default="SQL">
+      <connections>
+	  
+        <add name="SQL" 
+             providerMetadataKey="tgDefault" 
+             sqlAccessType="DynamicSQL" 
+             provider="Tiraggo.SqlClientProvider" 
+             providerClass="DataProvider" 
+             connectionString="Data Source=localhost;Initial Catalog=Northwind;User ID=SqlUserName;password=SqlPassword;" />	  
+
+        <add name="SQL_SSPI" 
+             providerMetadataKey="tgDefault" 
+             sqlAccessType="DynamicSQL" 
+             provider="Tiraggo.SqlClientProvider" 
+             providerClass="DataProvider" 
+             connectionString="Data Source=localhost;Initial Catalog=Northwind;Integrated Security=SSPI;" />
+
+      </connections>
+    </connectionInfo>
+  </Tiraggo>
+  
+</configuration>
