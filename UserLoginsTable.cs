@@ -7,17 +7,15 @@ namespace Tiraggo.AspNet.Identity
     /// <summary>
     /// Class that represents the UserLogins table
     /// </summary>
-    public class UserLoginsTable
+    public class UserLoginsTable : IdentityBaseTable
     {
-        private string _connectionName;
-
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="database"></param>
         public UserLoginsTable(string connectionString = null)
         {
-            _connectionName = connectionString;
+            ConnectionName = connectionString;
         }
 
         /// <summary>
@@ -32,6 +30,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == user.Id && q.LoginProvider == login.LoginProvider && q.ProviderKey == login.ProviderKey);
 
             AspNetUserLoginsCollection loginUsers = new AspNetUserLoginsCollection();
+            SetConnection(loginUsers);
             if(loginUsers.Load(q))
             {
                 loginUsers.MarkAllAsDeleted();
@@ -52,6 +51,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == userId);
 
             AspNetUserLoginsCollection loginUsers = new AspNetUserLoginsCollection();
+            SetConnection(loginUsers);
             if (loginUsers.Load(q))
             {
                 loginUsers.MarkAllAsDeleted();
@@ -70,6 +70,7 @@ namespace Tiraggo.AspNet.Identity
         public int Insert(IdentityUser user, UserLoginInfo login)
         {
             AspNetUserLogins loginUser = new AspNetUserLogins();
+            SetConnection(loginUser);
             loginUser.LoginProvider = login.LoginProvider;
             loginUser.ProviderKey = login.ProviderKey;
             loginUser.UserId = user.Id;
@@ -92,6 +93,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.LoginProvider == userLogin.LoginProvider && q.ProviderKey == userLogin.ProviderKey);
 
             AspNetUserLogins login = new AspNetUserLogins();
+            SetConnection(login);
             if(login.Load(q))
             {
                 userId = login.UserId;
@@ -113,6 +115,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == userId);
 
             AspNetUserLoginsCollection loginUsers = new AspNetUserLoginsCollection();
+            SetConnection(loginUsers);
             if (loginUsers.Load(q))
             {
                 foreach(AspNetUserLogins user in loginUsers)

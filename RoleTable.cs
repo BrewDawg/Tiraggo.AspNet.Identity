@@ -7,17 +7,15 @@ namespace Tiraggo.AspNet.Identity
     /// <summary>
     /// Class that represents the Role table 
     /// </summary>
-    public class RoleTable 
+    public class RoleTable : IdentityBaseTable
     {
-        private string _connectionName;
-
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="database"></param>
         public RoleTable(string connectionName = null)
         {
-            _connectionName = connectionName;
+            ConnectionName = connectionName;
         }
 
         /// <summary>
@@ -29,7 +27,12 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
-                AspNetRoles.Delete(roleId);
+                AspNetRoles role = new AspNetRoles();
+                SetConnection(role);
+                role.Id = roleId;
+                role.AcceptChanges();
+                role.MarkAsDeleted();
+                role.Save();
             }
             catch { }
 
@@ -44,6 +47,7 @@ namespace Tiraggo.AspNet.Identity
         public int Insert(IdentityRole role)
         {
             AspNetRoles newRole = new AspNetRoles();
+            SetConnection(newRole);
             newRole.Id = role.Id;
             newRole.Name = role.Name;
             newRole.Save();
@@ -61,6 +65,7 @@ namespace Tiraggo.AspNet.Identity
             string name = null;
 
             AspNetRoles role = new AspNetRoles();
+            SetConnection(role);
             if(role.LoadByPrimaryKey(roleId))
             {
                 name = role.Name;
@@ -83,6 +88,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.Name == roleName);
 
             AspNetRoles role = new AspNetRoles();
+            SetConnection(role);
             if(role.Load(q))
             {
                 roleId = role.Id;
@@ -130,6 +136,7 @@ namespace Tiraggo.AspNet.Identity
         public int Update(IdentityRole role)
         {
             AspNetRoles roleToUpdate = new AspNetRoles();
+            SetConnection(roleToUpdate);
             roleToUpdate.AcceptChanges();
 
             roleToUpdate.Id = role.Id;

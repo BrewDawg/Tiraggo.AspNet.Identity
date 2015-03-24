@@ -30,16 +30,7 @@ namespace Tiraggo.AspNet.Identity
         private UserClaimsTable userClaimsTable;
         private UserLoginsTable userLoginsTable;
 
-        public string ConnectionName { get; private set; }
-
-        public IQueryable<TUser> Users
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
+        private string _connectionName = null;
 
         /// <summary>
         /// Default constructor 
@@ -59,14 +50,40 @@ namespace Tiraggo.AspNet.Identity
         /// <param name="database"></param>
         public UserStore(string connectionName)
         {
-            ConnectionName = connectionName;
+            _connectionName = connectionName;
 
-            userTable = new UserTable<TUser>(connectionName);
-            roleTable = new RoleTable(connectionName);
-            userRolesTable = new UserRolesTable(connectionName);
-            userClaimsTable = new UserClaimsTable(connectionName);
-            userLoginsTable = new UserLoginsTable(connectionName);
+            userTable = new UserTable<TUser>(_connectionName);
+            roleTable = new RoleTable(_connectionName);
+            userRolesTable = new UserRolesTable(_connectionName);
+            userClaimsTable = new UserClaimsTable(_connectionName);
+            userLoginsTable = new UserLoginsTable(_connectionName);
         }
+
+        public string ConnectionName
+        {
+            get
+            {
+                return _connectionName;
+            }
+
+            set
+            {
+                userTable.ConnectionName = value;
+                roleTable.ConnectionName = value;
+                userRolesTable .ConnectionName = value;
+                userClaimsTable.ConnectionName = value;
+                userLoginsTable.ConnectionName = value;
+            }
+        }
+
+        public IQueryable<TUser> Users
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
         /// <summary>
         /// Insert a new TUser in the UserTable

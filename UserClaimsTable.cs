@@ -7,17 +7,15 @@ namespace Tiraggo.AspNet.Identity
     /// <summary>
     /// Class that represents the UserClaims table 
     /// </summary>
-    public class UserClaimsTable
+    public class UserClaimsTable : IdentityBaseTable
     {
-        private string _connectionName;
-
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="database"></param>
         public UserClaimsTable(string connectionName = null)
         {
-            _connectionName = connectionName;
+            ConnectionName = connectionName;
         }
 
         /// <summary>
@@ -33,6 +31,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == userId);
 
             AspNetUserClaimsCollection coll = new AspNetUserClaimsCollection();
+            SetConnection(coll);
             if (coll.Load(q))
             {
                 foreach (AspNetUserClaims c in coll)
@@ -56,6 +55,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == userId);
 
             AspNetUserClaimsCollection coll = new AspNetUserClaimsCollection();
+            SetConnection(coll);
             if (coll.Load(q))
             {
                 coll.MarkAllAsDeleted();
@@ -74,6 +74,7 @@ namespace Tiraggo.AspNet.Identity
         public int Insert(Claim userClaim, string userId)
         {
             AspNetUserClaims claim = new AspNetUserClaims();
+            SetConnection(claim);
             claim.ClaimType = userClaim.Type;
             claim.ClaimValue = userClaim.Value;
             claim.UserId = userId;
@@ -94,6 +95,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserId == user.Id && q.ClaimType == claim.Type && q.ClaimValue == claim.Value);
 
             AspNetUserClaimsCollection coll = new AspNetUserClaimsCollection();
+            SetConnection(coll);
             if (coll.Load(q))
             {
                 coll.MarkAllAsDeleted();

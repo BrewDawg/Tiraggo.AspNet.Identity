@@ -6,17 +6,15 @@ namespace Tiraggo.AspNet.Identity
     /// <summary>
     /// Class that represents the UserRoles table
     /// </summary>
-    public class UserRolesTable
+    public class UserRolesTable : IdentityBaseTable
     {
-        private string _connectionName;
-
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="database"></param>
         public UserRolesTable(string connectionName = null)
         {
-            _connectionName = connectionName;
+            ConnectionName = connectionName;
         }
 
         /// <summary>
@@ -35,6 +33,7 @@ namespace Tiraggo.AspNet.Identity
             r.InnerJoin(ur).On(ur.UserId == userId && ur.RoleId == r.Id);
 
             AspNetRolesCollection coll = new AspNetRolesCollection();
+            SetConnection(coll);
             if(coll.Load(r))
             {
                 foreach(AspNetRoles role in coll)
@@ -59,6 +58,7 @@ namespace Tiraggo.AspNet.Identity
                 q.Where(q.UserId == userId);
 
                 AspNetUserRolesCollection coll = new AspNetUserRolesCollection();
+                SetConnection(coll);
                 if(coll.Load(q))
                 {
                     coll.MarkAllAsDeleted();
@@ -79,6 +79,7 @@ namespace Tiraggo.AspNet.Identity
         public int Insert(IdentityUser user, string roleId)
         {
             AspNetUserRoles userRole = new AspNetUserRoles();
+            SetConnection(userRole);
             userRole.UserId = user.Id;
             userRole.RoleId = roleId;
             userRole.Save();

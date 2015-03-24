@@ -8,17 +8,15 @@ namespace Tiraggo.AspNet.Identity
     /// <summary>
     /// Class that represents the Users table
     /// </summary>
-    public class UserTable<TUser> where TUser :IdentityUser
+    public class UserTable<TUser> : IdentityBaseTable where TUser :IdentityUser
     {
-        private string _connectionName;
-
         /// <summary>
         /// Constructor that takes an optional connection name 
         /// </summary>
         /// <param name="database"></param>
         public UserTable(string connectionName = null)
         {
-            _connectionName = connectionName;
+            ConnectionName = connectionName;
         }
 
         /// <summary>
@@ -31,6 +29,7 @@ namespace Tiraggo.AspNet.Identity
             string userName = null;
 
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if(user.LoadByPrimaryKey(userId))
             {
                 userName = user.UserName;
@@ -53,6 +52,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.UserName == userName);
 
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if(user.Load(q))
             {
                 userId = user.Id;
@@ -74,6 +74,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.Id == userId);
 
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if (user.Load(q))
             {
                 newUser = (TUser)Activator.CreateInstance(typeof(TUser));
@@ -109,6 +110,7 @@ namespace Tiraggo.AspNet.Identity
             int id = Thread.CurrentThread.ManagedThreadId;
 
             AspNetUsersCollection coll = new AspNetUsersCollection();
+            SetConnection(coll);
             if (coll.Load(q))
             {
                 foreach (AspNetUsers user in coll)
@@ -142,6 +144,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.Email == email);
 
             AspNetUsersCollection coll = new AspNetUsersCollection();
+            SetConnection(coll);
             if (coll.Load(q))
             {
                 foreach (AspNetUsers user in coll)
@@ -182,6 +185,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.Id == userId);
 
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if(user.Load(q))
             {
                 passwordHash = user.PasswordHash;
@@ -199,6 +203,7 @@ namespace Tiraggo.AspNet.Identity
         public int SetPasswordHash(string userId, string passwordHash)
         {
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if(user.LoadByPrimaryKey(userId))
             {
                 user.PasswordHash = passwordHash;
@@ -222,6 +227,7 @@ namespace Tiraggo.AspNet.Identity
             q.Where(q.Id == userId);
 
             AspNetUsers user = new AspNetUsers();
+            SetConnection(user);
             if (user.Load(q))
             {
                 stamp = user.SecurityStamp;
@@ -237,22 +243,23 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(TUser user)
         {
-            AspNetUsers u = new AspNetUsers();
+            AspNetUsers newUser = new AspNetUsers();
+            SetConnection(newUser);
 
-            u.UserName = user.UserName;
-            u.Id = user.Id;
-            u.PasswordHash = user.PasswordHash;
-            u.SecurityStamp = user.SecurityStamp;
-            u.Email = user.Email;
-            u.EmailConfirmed = user.EmailConfirmed;
-            u.PhoneNumber = user.PhoneNumber;
-            u.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
-            u.AccessFailedCount = user.AccessFailedCount;
-            u.LockoutEnabled = user.LockoutEnabled;
-            u.LockoutEndDateUtc = user.LockoutEndDateUtc;
-            u.TwoFactorEnabled = user.TwoFactorEnabled;
+            newUser.UserName = user.UserName;
+            newUser.Id = user.Id;
+            newUser.PasswordHash = user.PasswordHash;
+            newUser.SecurityStamp = user.SecurityStamp;
+            newUser.Email = user.Email;
+            newUser.EmailConfirmed = user.EmailConfirmed;
+            newUser.PhoneNumber = user.PhoneNumber;
+            newUser.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+            newUser.AccessFailedCount = user.AccessFailedCount;
+            newUser.LockoutEnabled = user.LockoutEnabled;
+            newUser.LockoutEndDateUtc = user.LockoutEndDateUtc;
+            newUser.TwoFactorEnabled = user.TwoFactorEnabled;
 
-            u.Save();
+            newUser.Save();
 
             return 1;
         }
@@ -266,7 +273,12 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
-                AspNetUsers.Delete(userId);
+                AspNetUsers user = new AspNetUsers();
+                SetConnection(user);
+                user.Id = userId;
+                user.AcceptChanges();
+                user.MarkAsDeleted();
+                user.Save();
             }
             catch { }
 
@@ -282,7 +294,7 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
-                AspNetUsers.Delete(user.Id);
+                Delete(user.Id);
             }
             catch { }
 
@@ -297,6 +309,7 @@ namespace Tiraggo.AspNet.Identity
         public int Update(TUser user)
         {
             AspNetUsers newUser = new AspNetUsers();
+            SetConnection(newUser);
             if (newUser.LoadByPrimaryKey(user.Id))
             {
                 newUser.Id = user.Id;
