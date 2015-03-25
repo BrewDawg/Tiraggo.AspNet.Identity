@@ -26,6 +26,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Delete(IdentityUser user, UserLoginInfo login)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserLoginsQuery q = new AspNetUserLoginsQuery();
             q.Where(q.UserId == user.Id && q.LoginProvider == login.LoginProvider && q.ProviderKey == login.ProviderKey);
 
@@ -47,6 +49,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Delete(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserLoginsQuery q = new AspNetUserLoginsQuery();
             q.Where(q.UserId == userId);
 
@@ -69,6 +73,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(IdentityUser user, UserLoginInfo login)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserLogins loginUser = new AspNetUserLogins();
             SetConnection(loginUser);
             loginUser.LoginProvider = login.LoginProvider;
@@ -86,6 +92,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public string FindUserIdByLogin(UserLoginInfo userLogin)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string userId = null;
 
             AspNetUserLoginsQuery q = new AspNetUserLoginsQuery();
@@ -109,6 +117,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public List<UserLoginInfo> FindByUserId(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             List<UserLoginInfo> logins = new List<UserLoginInfo>();
 
             AspNetUserLoginsQuery q = new AspNetUserLoginsQuery();

@@ -94,6 +94,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task CreateAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -111,6 +113,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<TUser> FindByIdAsync(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (string.IsNullOrEmpty(userId))
             {
                 throw new ArgumentException("Null or empty argument: userId");
@@ -132,6 +136,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<TUser> FindByNameAsync(string userName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (string.IsNullOrEmpty(userName))
             {
                 throw new ArgumentException("Null or empty argument: userName");
@@ -157,6 +163,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task UpdateAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -180,6 +188,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task AddClaimAsync(TUser user, Claim claim)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -202,6 +212,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<IList<Claim>> GetClaimsAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             ClaimsIdentity identity = userClaimsTable.FindByUserId(user.Id);
 
             return Task.FromResult<IList<Claim>>(identity.Claims.ToList());
@@ -215,6 +227,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task RemoveClaimAsync(TUser user, Claim claim)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -238,6 +252,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task AddLoginAsync(TUser user, UserLoginInfo login)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -260,6 +276,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<TUser> FindAsync(UserLoginInfo login)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (login == null)
             {
                 throw new ArgumentNullException("login");
@@ -285,6 +303,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<IList<UserLoginInfo>> GetLoginsAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             List<UserLoginInfo> userLogins = new List<UserLoginInfo>();
             if (user == null)
             {
@@ -308,6 +328,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task RemoveLoginAsync(TUser user, UserLoginInfo login)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -331,6 +353,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task AddToRoleAsync(TUser user, string roleName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -357,6 +381,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<IList<string>> GetRolesAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -381,6 +407,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> IsInRoleAsync(TUser user, string role)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user == null)
             {
                 throw new ArgumentNullException("user");
@@ -410,6 +438,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task RemoveFromRoleAsync(TUser user, string role)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             throw new NotImplementedException();
         }
 
@@ -420,6 +450,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task DeleteAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (user != null)
             {
                 userTable.Delete(user);
@@ -435,6 +467,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<string> GetPasswordHashAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string passwordHash = userTable.GetPasswordHash(user.Id);
 
             return Task.FromResult<string>(passwordHash);
@@ -447,6 +481,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> HasPasswordAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             var hasPassword = !string.IsNullOrEmpty(userTable.GetPasswordHash(user.Id));
 
             return Task.FromResult<bool>(Boolean.Parse(hasPassword.ToString()));
@@ -460,6 +496,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetPasswordHashAsync(TUser user, string passwordHash)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.PasswordHash = passwordHash;
 
             return Task.FromResult<Object>(null);
@@ -473,6 +511,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetSecurityStampAsync(TUser user, string stamp)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.SecurityStamp = stamp;
 
             return Task.FromResult(0);
@@ -486,6 +526,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<string> GetSecurityStampAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.SecurityStamp);
         }
 
@@ -497,12 +539,13 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetEmailAsync(TUser user, string email)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.Email = email;
             userTable.Update(user);
 
             return Task.FromResult(0);
-
-        }
+       }
 
         /// <summary>
         /// Get email from user
@@ -511,6 +554,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<string> GetEmailAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.Email);
         }
 
@@ -521,6 +566,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> GetEmailConfirmedAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.EmailConfirmed);
         }
 
@@ -532,6 +579,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetEmailConfirmedAsync(TUser user, bool confirmed)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.EmailConfirmed = confirmed;
             userTable.Update(user);
 
@@ -545,6 +594,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<TUser> FindByEmailAsync(string email)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             if (String.IsNullOrEmpty(email))
             {
                 throw new ArgumentNullException("email");
@@ -567,6 +618,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetPhoneNumberAsync(TUser user, string phoneNumber)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.PhoneNumber = phoneNumber;
             userTable.Update(user);
 
@@ -580,6 +633,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<string> GetPhoneNumberAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.PhoneNumber);
         }
 
@@ -590,6 +645,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> GetPhoneNumberConfirmedAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.PhoneNumberConfirmed);
         }
 
@@ -601,6 +658,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetPhoneNumberConfirmedAsync(TUser user, bool confirmed)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.PhoneNumberConfirmed = confirmed;
             userTable.Update(user);
 
@@ -615,6 +674,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetTwoFactorEnabledAsync(TUser user, bool enabled)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.TwoFactorEnabled = enabled;
             userTable.Update(user);
 
@@ -628,6 +689,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> GetTwoFactorEnabledAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.TwoFactorEnabled);
         }
 
@@ -638,6 +701,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<DateTimeOffset> GetLockoutEndDateAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return
                 Task.FromResult(user.LockoutEndDateUtc.HasValue
                     ? new DateTimeOffset(DateTime.SpecifyKind(user.LockoutEndDateUtc.Value, DateTimeKind.Utc))
@@ -653,6 +718,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetLockoutEndDateAsync(TUser user, DateTimeOffset lockoutEnd)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.LockoutEndDateUtc = lockoutEnd.UtcDateTime;
             userTable.Update(user);
 
@@ -666,6 +733,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<int> IncrementAccessFailedCountAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.AccessFailedCount++;
             userTable.Update(user);
 
@@ -679,6 +748,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task ResetAccessFailedCountAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.AccessFailedCount = 0;
             userTable.Update(user);
 
@@ -692,6 +763,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<int> GetAccessFailedCountAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.AccessFailedCount);
         }
 
@@ -702,6 +775,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task<bool> GetLockoutEnabledAsync(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             return Task.FromResult(user.LockoutEnabled);
         }
 
@@ -713,6 +788,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public Task SetLockoutEnabledAsync(TUser user, bool enabled)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             user.LockoutEnabled = enabled;
             userTable.Update(user);
 

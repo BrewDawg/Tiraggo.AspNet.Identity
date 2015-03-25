@@ -25,6 +25,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public ClaimsIdentity FindByUserId(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             ClaimsIdentity claims = new ClaimsIdentity();
 
             AspNetUserClaimsQuery q = new AspNetUserClaimsQuery();
@@ -51,6 +53,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Delete(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserClaimsQuery q = new AspNetUserClaimsQuery();
             q.Where(q.UserId == userId);
 
@@ -73,6 +77,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(Claim userClaim, string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserClaims claim = new AspNetUserClaims();
             SetConnection(claim);
             claim.ClaimType = userClaim.Type;
@@ -91,6 +97,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Delete(IdentityUser user, Claim claim)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserClaimsQuery q = new AspNetUserClaimsQuery();
             q.Where(q.UserId == user.Id && q.ClaimType == claim.Type && q.ClaimValue == claim.Value);
 

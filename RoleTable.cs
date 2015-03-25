@@ -27,6 +27,8 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
+                ConnectionService.ThreadVanityUrl = ConnectionName;
+
                 AspNetRoles role = new AspNetRoles();
                 SetConnection(role);
                 role.Id = roleId;
@@ -46,6 +48,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(IdentityRole role)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetRoles newRole = new AspNetRoles();
             SetConnection(newRole);
             newRole.Id = role.Id;
@@ -62,6 +66,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns>Role name</returns>
         public string GetRoleName(string roleId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string name = null;
 
             AspNetRoles role = new AspNetRoles();
@@ -81,6 +87,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns>Role's Id</returns>
         public string GetRoleId(string roleName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string roleId = null;
 
             AspNetRolesQuery q = new AspNetRolesQuery();
@@ -104,6 +112,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public IdentityRole GetRoleById(string roleId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             var roleName = GetRoleName(roleId);
             IdentityRole role = null;
 
@@ -122,6 +132,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public IdentityRole GetRoleByName(string roleName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             var roleId = GetRoleId(roleName);
             IdentityRole role = null;
 
@@ -135,6 +147,8 @@ namespace Tiraggo.AspNet.Identity
 
         public int Update(IdentityRole role)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetRoles roleToUpdate = new AspNetRoles();
             SetConnection(roleToUpdate);
             roleToUpdate.AcceptChanges();

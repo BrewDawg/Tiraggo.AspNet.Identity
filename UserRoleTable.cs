@@ -24,6 +24,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public List<string> FindByUserId(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             List<string> roles = new List<string>();
 
             AspNetRolesQuery r = new AspNetRolesQuery("r");
@@ -33,7 +35,6 @@ namespace Tiraggo.AspNet.Identity
             r.InnerJoin(ur).On(ur.UserId == userId && ur.RoleId == r.Id);
 
             AspNetRolesCollection coll = new AspNetRolesCollection();
-            SetConnection(coll);
             if(coll.Load(r))
             {
                 foreach(AspNetRoles role in coll)
@@ -54,6 +55,8 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
+                ConnectionService.ThreadVanityUrl = ConnectionName;
+
                 AspNetUserRolesQuery q = new AspNetUserRolesQuery();
                 q.Where(q.UserId == userId);
 
@@ -78,6 +81,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(IdentityUser user, string roleId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUserRoles userRole = new AspNetUserRoles();
             SetConnection(userRole);
             userRole.UserId = user.Id;

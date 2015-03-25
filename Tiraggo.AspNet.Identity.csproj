@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionService.cs" />
     <Compile Include="IdentityBaseTable.cs" />
     <Compile Include="IdentityRole.cs" />
     <Compile Include="IdentityUser.cs" />

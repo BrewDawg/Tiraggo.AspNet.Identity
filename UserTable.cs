@@ -26,6 +26,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public string GetUserName(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string userName = null;
 
             AspNetUsers user = new AspNetUsers();
@@ -45,6 +47,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public string GetUserId(string userName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string userId = null;
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -68,6 +72,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public TUser GetUserById(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             TUser newUser = null;
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -102,6 +108,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public List<TUser> GetUserByName(string userName)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             List<TUser> users = new List<TUser>();
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -138,6 +146,8 @@ namespace Tiraggo.AspNet.Identity
 
         public List<TUser> GetUserByEmail(string email)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             List<TUser> users = new List<TUser>();
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -178,6 +188,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public string GetPasswordHash(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string passwordHash = null;
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -202,6 +214,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int SetPasswordHash(string userId, string passwordHash)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUsers user = new AspNetUsers();
             SetConnection(user);
             if(user.LoadByPrimaryKey(userId))
@@ -220,6 +234,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public string GetSecurityStamp(string userId)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             string stamp = null;
 
             AspNetUsersQuery q = new AspNetUsersQuery();
@@ -243,6 +259,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Insert(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUsers newUser = new AspNetUsers();
             SetConnection(newUser);
 
@@ -273,6 +291,8 @@ namespace Tiraggo.AspNet.Identity
         {
             try
             {
+                ConnectionService.ThreadVanityUrl = ConnectionName;
+
                 AspNetUsers user = new AspNetUsers();
                 SetConnection(user);
                 user.Id = userId;
@@ -308,6 +328,8 @@ namespace Tiraggo.AspNet.Identity
         /// <returns></returns>
         public int Update(TUser user)
         {
+            ConnectionService.ThreadVanityUrl = ConnectionName;
+
             AspNetUsers newUser = new AspNetUsers();
             SetConnection(newUser);
             if (newUser.LoadByPrimaryKey(user.Id))

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tiraggo.Core;
+using Tiraggo.DynamicQuery;
+using Tiraggo.Interfaces;
 
 namespace Tiraggo.AspNet.Identity
 {
@@ -21,7 +23,7 @@ namespace Tiraggo.AspNet.Identity
         {
             if(!String.IsNullOrWhiteSpace(_connectionName))
             {
-                entity.ConnectionServiceOverride(_connectionName);
+                entity.tg.Connection.Name = _connectionName;
             }
         }
 
@@ -29,7 +31,15 @@ namespace Tiraggo.AspNet.Identity
         {
             if (!String.IsNullOrWhiteSpace(_connectionName))
             {
-                coll.ConnectionServiceOverride(_connectionName);
+                coll.tg.Connection.Name = _connectionName;
+            }
+        }
+
+        protected void SetConnection(tgDynamicQuery query)
+        {
+            if (!String.IsNullOrWhiteSpace(_connectionName))
+            {
+                query.tg2.Connection.Name = _connectionName;
             }
         }
     }
