@@ -68,6 +68,8 @@ namespace Tiraggo.AspNet.Identity
 
             set
             {
+                _connectionName = value;
+
                 userTable.ConnectionName = value;
                 roleTable.ConnectionName = value;
                 userRolesTable .ConnectionName = value;
